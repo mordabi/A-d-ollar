@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const users_1 = require("../models/users");
+//import { validationResult}  from 'express-validator/check';
+const rules_1 = require("../rules/rules");
 //const Useres = require('../data');
 class UserRoutes {
     constructor() {
@@ -48,6 +50,9 @@ class UserRoutes {
         });
     }
     CreateUser(req, res, next) {
+        // const errors = validationResult(req);
+        // if (!errors.isEmpty())
+        //     return res.status(422).json(errors.array())
         var name = req.body.name;
         var gender = req.body.gender;
         var email = req.body.email;
@@ -73,10 +78,12 @@ class UserRoutes {
                 });
             }).catch((err) => {
                 const status = res.statusCode;
-                res.json({
-                    Status: status,
-                    err: err
-                });
+                // res.json({
+                //     Status:status,
+                //     err:err
+                //})
+                err.status = res.statusCode;
+                next(err);
             });
         }).catch(err => { console.log(err); });
     }
@@ -93,11 +100,10 @@ class UserRoutes {
             });
         });
     }
-    Update(req, res) {
-        var email = req.params.email;
-        var user = req.body;
-    }
     UpdateUser(req, res) {
+        // const errors = validationResult(req);
+        // if (!errors.isEmpty())
+        //     return res.status(422).json(errors.array())
         var email = req.params.email;
         var user = new users_1.default(req.body.user);
         console.log(user);
@@ -129,8 +135,8 @@ class UserRoutes {
     routes() {
         this.router.get('/', this.GetAllUsers);
         this.router.get('/:email', this.GetUsersById);
-        this.router.post('/newUser', this.CreateUser);
-        this.router.put('/:email', this.UpdateUser);
+        this.router.post('/newUser', rules_1.default['forRegister'], this.CreateUser);
+        this.router.put('/:email', rules_1.default['forRegister'], this.UpdateUser);
         this.router.delete('/:email', this.DeleteUser);
     }
 }

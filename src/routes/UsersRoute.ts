@@ -1,7 +1,9 @@
 import {Router,Request,Response,NextFunction} from 'express';
-import { model, Mongoose, mongo } from 'mongoose';
+import { model, Mongoose, mongo, Error } from 'mongoose';
 import Users from '../models/users';
 import { hash } from '../../node_modules/@types/bcryptjs';
+//import { validationResult}  from 'express-validator/check';
+import userRules from '../rules/rules';
 
 
 //const Useres = require('../data');
@@ -20,7 +22,7 @@ class UserRoutes
     }
 
 
-    public GetAllUsers(req:Request,res:Response):void{
+    public GetAllUsers(req:Request,res:Response){
         Users.find({}).then((data) => {
             res.status(200).json({
                 Data:data,
@@ -34,7 +36,7 @@ class UserRoutes
             })
         })
     }
-    public GetUsersById(req:Request,res:Response):void{
+    public GetUsersById(req:Request,res:Response){
           const email:String = req.params.email;
             
         Users.findOne({email:email}).then((data) => {
@@ -60,6 +62,10 @@ class UserRoutes
     public CreateUser(req:Request,res:Response,next:NextFunction){
         
          
+        // const errors = validationResult(req);
+
+        // if (!errors.isEmpty())
+        //     return res.status(422).json(errors.array())
          var name = req.body.name;
          var gender = req.body.gender;
          var email = req.body.email;
@@ -93,14 +99,16 @@ class UserRoutes
                 })
             }).catch((err) => {
                 const status =  res.statusCode;
-                res.json({
-                    Status:status,
-                    err:err
-                })
+                // res.json({
+                //     Status:status,
+                //     err:err
+                //})
+                err.status = res.statusCode;
+                next(err);
             })
         }).catch(err=>{console.log(err);});
     }
-    public DeleteUser(req:Request,res:Response):void{
+    public DeleteUser(req:Request,res:Response){
           const email = req.params.email;
            const status = res.statusCode;
           Users.findOneAndRemove(email,(err,removed)=>{
@@ -117,13 +125,11 @@ class UserRoutes
           })
         
     }
-    public Update(req:Request,res:Response){
-        var email =  req.params.email;
-        var user = req.body;
-
-        
-    }
     public UpdateUser(req:Request,res:Response){
+        // const errors = validationResult(req);
+
+        // if (!errors.isEmpty())
+        //     return res.status(422).json(errors.array())
         var email =  req.params.email;
         var user  =new Users(req.body.user);
         console.log(user);
@@ -162,8 +168,8 @@ class UserRoutes
 
         this.router.get('/',this.GetAllUsers);
         this.router.get('/:email', this.GetUsersById)
-        this .router.post('/newUser' , this.CreateUser);
-        this.router.put('/:email',this.UpdateUser);
+        this .router.post('/newUser', userRules['forRegister'], this.CreateUser);
+        this.router.put('/:email',userRules['forRegister'],this.UpdateUser);
         this.router.delete('/:email',this.DeleteUser);
     }
 } 
