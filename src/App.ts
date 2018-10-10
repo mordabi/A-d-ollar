@@ -5,12 +5,15 @@ import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
 import * as cors from 'cors';
 //import HeroRouter from './routes/HeroRouter';
-import * as mongoose  from 'mongoose';
+import * as mongoose from 'mongoose';
+import UserRoute from './routes/UsersRoute';
 import participate from './routes/ParticipateRoute';
+import { request } from 'https';
+import { error } from 'util';
 var config = require('./config').get(process.env.NODE_ENV);
 
 
-const MONGO_URI =config.database;
+const MONGO_URI = config.database;
 // Creates and configures an ExpressJS web server.
 class App {
 
@@ -47,7 +50,25 @@ class App {
       });
     });
     this.express.use('/', router);
-    this.express.use('/participate',participate);
+    this.express.use('/Users',UserRoute);
+    this.express.use('/participate', participate);
+    this.express.use((req, res, next) => {
+      const err = new error();
+      err.message = 'not found';
+      err.status = 404;
+      next(err);
+    });
+    this.express.use((error, req, res, next) => {
+      res.status(error.status || 500);
+      res.json({
+      err:
+        {
+          message: error.message,
+          status:error.status
+        }
+      });
+    });
+
   }
 
 }

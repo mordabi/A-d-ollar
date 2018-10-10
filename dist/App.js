@@ -7,7 +7,9 @@ const helmet = require("helmet");
 const cors = require("cors");
 //import HeroRouter from './routes/HeroRouter';
 const mongoose = require("mongoose");
+const UsersRoute_1 = require("./routes/UsersRoute");
 const ParticipateRoute_1 = require("./routes/ParticipateRoute");
+const util_1 = require("util");
 var config = require('./config').get(process.env.NODE_ENV);
 const MONGO_URI = config.database;
 // Creates and configures an ExpressJS web server.
@@ -40,7 +42,23 @@ class App {
             });
         });
         this.express.use('/', router);
+        this.express.use('/Users', UsersRoute_1.default);
         this.express.use('/participate', ParticipateRoute_1.default);
+        this.express.use((req, res, next) => {
+            const err = new util_1.error();
+            err.message = 'not found';
+            err.status = 404;
+            next(err);
+        });
+        this.express.use((error, req, res, next) => {
+            res.status(error.status || 500);
+            res.json({
+                err: {
+                    message: error.message,
+                    status: error.status
+                }
+            });
+        });
     }
 }
 exports.default = new App().express;
