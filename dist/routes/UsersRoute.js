@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const users_1 = require("../models/users");
-//import { validationResult}  from 'express-validator/check';
-const rules_1 = require("../rules/rules");
 //const Useres = require('../data');
 class UserRoutes {
     constructor() {
@@ -135,8 +133,8 @@ class UserRoutes {
     routes() {
         this.router.get('/', this.GetAllUsers);
         this.router.get('/:email', this.GetUsersById);
-        this.router.post('/newUser', rules_1.default['forRegister'], this.CreateUser);
-        this.router.put('/:email', rules_1.default['forRegister'], this.UpdateUser);
+        this.router.post('/newUser', this.CreateUser);
+        this.router.put('/:email', this.UpdateUser);
         this.router.delete('/:email', this.DeleteUser);
     }
 }

@@ -168,8 +168,8 @@ class UserRoutes
 
         this.router.get('/',this.GetAllUsers);
         this.router.get('/:email', this.GetUsersById)
-        this .router.post('/newUser', userRules['forRegister'], this.CreateUser);
-        this.router.put('/:email',userRules['forRegister'],this.UpdateUser);
+        this .router.post('/newUser', this.CreateUser);
+        this.router.put('/:email',this.UpdateUser);
         this.router.delete('/:email',this.DeleteUser);
     }
 } 
