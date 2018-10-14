@@ -1,5 +1,5 @@
 import {Router,Request,Response,NextFunction} from 'express';
-import Participate from '../models/Participate'
+import participate from '../models/Participate'
 
 //const Participatees = require('../data');
 
@@ -18,7 +18,7 @@ class ParticipateRoutes
 
 
     public GetAllParticipate(req:Request,res:Response):void{
-        Participate.find({}).then((data) => {
+        participate.find({}).then((data) => {
             res.status(200).json({
                 Data:data,
             })
@@ -34,7 +34,7 @@ class ParticipateRoutes
     public GetParticipateById(req:Request,res:Response):void{
           const id:String = req.params.id;
             
-        Participate.findById(id).then((data) => {
+          participate.findById(id).then((data) => {
             if (!data){
                 res.status(404).json({
                     err:'does not exist'
@@ -61,7 +61,7 @@ class ParticipateRoutes
         return res.status(401).json({err:'cant be empty'})
 
         
-      Participate.create(newParticipate).then((data)=>{
+        participate.create(newParticipate).then((data)=>{
 
       }).catch(err=>{
         const status =  res.statusCode;
@@ -77,7 +77,7 @@ class ParticipateRoutes
     public DeleteParticipate(req:Request,res:Response):void{
           const id = req.params.id;
            const status = res.statusCode;
-          Participate.findByIdAndRemove(id,(err,removed)=>{
+           participate.findByIdAndRemove(id,(err,removed)=>{
               
               if (err) 
               {
