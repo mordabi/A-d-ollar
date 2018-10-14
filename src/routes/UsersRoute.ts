@@ -2,7 +2,7 @@ import {Router,Request,Response,NextFunction} from 'express';
 import { model, Mongoose, mongo, Error } from 'mongoose';
 import Users from '../models/users';
 import { hash } from '../../node_modules/@types/bcryptjs';
-//import { validationResult}  from 'express-validator/check';
+import { validationResult}  from 'express-validator/check';
 import userRules from '../rules/rules';
 
 
@@ -62,10 +62,10 @@ class UserRoutes
     public CreateUser(req:Request,res:Response,next:NextFunction){
         
          
-        // const errors = validationResult(req);
+        const errors = validationResult(req);
 
-        // if (!errors.isEmpty())
-        //     return res.status(422).json(errors.array())
+        if (!errors.isEmpty())
+            return res.status(422).json(errors.array())
          var name = req.body.name;
          var gender = req.body.gender;
          var email = req.body.email;
@@ -126,12 +126,12 @@ class UserRoutes
         
     }
     public UpdateUser(req:Request,res:Response){
-        // const errors = validationResult(req);
+        const errors = validationResult(req);
 
-        // if (!errors.isEmpty())
-        //     return res.status(422).json(errors.array())
+        if (!errors.isEmpty())
+            return res.status(422).json(errors.array())
         var email =  req.params.email;
-        var user  =new Users(req.body.user);
+        var user  =new Users(req.body);
         console.log(user);
 
         if(!user)
@@ -168,8 +168,8 @@ class UserRoutes
 
         this.router.get('/',this.GetAllUsers);
         this.router.get('/:email', this.GetUsersById)
-        this .router.post('/newUser', this.CreateUser);
-        this.router.put('/:email',this.UpdateUser);
+        this .router.post('/newUser', userRules['forRegister'], this.CreateUser);
+        this.router.put('/:email',userRules['forupdate'],this.UpdateUser);
         this.router.delete('/:email',this.DeleteUser);
     }
 } 
