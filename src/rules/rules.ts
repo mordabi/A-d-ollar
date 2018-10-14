@@ -19,19 +19,20 @@ const userRules = {
     ,
     
 forupdate:[
-  check('email')
+  check('Myemail')
   .isEmail().withMessage('Invalid email format')
 .custom(email => {return Users.find({email:email}).then(u => { return u.length})}).withMessage('email does not exist'),
  check('password')
 .isLength({ min: 8 }).withMessage('Invalid password min 8'),
 check('name')
 .isLength({min:3,max:15}).withMessage('min 3 max 15'),
-check('newMail')
+check('email')
 .custom(value=> {
   if (value)
   {
-    return check('newMail').isEmail().withMessage('Invalid emil format');
+    return check('email').isEmail().withMessage('Invalid emil format');
   }
+   
 })
 
 

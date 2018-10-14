@@ -130,7 +130,7 @@ class UserRoutes
 
         if (!errors.isEmpty())
             return res.status(422).json(errors.array())
-        var email =  req.params.email;
+        var email =  req.params.Myemail;
         var user  =new Users(req.body);
         console.log(user);
 
@@ -169,7 +169,7 @@ class UserRoutes
         this.router.get('/',this.GetAllUsers);
         this.router.get('/:email', this.GetUsersById)
         this .router.post('/newUser', userRules['forRegister'], this.CreateUser);
-        this.router.put('/:email',userRules['forupdate'],this.UpdateUser);
+        this.router.put('/:Myemail',userRules['forupdate'],this.UpdateUser);
         this.router.delete('/:email',this.DeleteUser);
     }
 } 
