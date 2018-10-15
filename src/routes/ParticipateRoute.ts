@@ -1,5 +1,5 @@
 import {Router,Request,Response,NextFunction} from 'express';
-import participate from '../models/Participate'
+import participate from '../models/participate'
 
 //const Participatees = require('../data');
 
