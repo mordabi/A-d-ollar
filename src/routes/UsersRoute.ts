@@ -130,6 +130,10 @@ class UserRoutes
 
         if (!errors.isEmpty())
             return res.status(422).json(errors.array())
+        if (!req.body.email)
+        {
+            req.body.email = req.params.Myemail;
+        }
         var email =  req.params.Myemail;
         var user  =new Users(req.body);
         console.log(user);
