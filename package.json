@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node dist/index.js",
-    "ts-server" :"set NODE_ENV=default&&nodemon dist/index.js",
+    "ts-server": "set NODE_ENV=default&&nodemon dist/index.js",
     "test": "mocha --reporter spec --compilers ts:ts-node/register 'test/**/*.test.ts'",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
-    "postinstall":"npm run build-ts" 
+    "postinstall": "npm run build-ts"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +32,7 @@
     "cors": "^2.8.4",
     "gulp": "^3.9.1",
     "gulp-typescript": "^3.1.1",
-    "helmet": "^3.13.0",
+    "helmet": "^3.14.0",
     "mocha": "^3.1.2",
     "nodemon": "^1.18.4",
     "ts-node": "^3.3.0",
