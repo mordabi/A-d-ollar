@@ -22,6 +22,7 @@ class App {
 
   //Run configuration methods on the Express instance.
   constructor() {
+    
     this.express = express();
     this.middleware();
     this.routes();
@@ -45,6 +46,7 @@ class App {
     let router = express.Router();
     // placeholder route handler
     router.get('/', (req, res, next) => {
+      console.log(process.env.NODE_ENV);
       res.json({
         message: 'Hello World!'
       });

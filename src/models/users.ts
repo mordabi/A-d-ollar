@@ -16,6 +16,7 @@ interface IUserModel extends IUser,Document
 let users:Schema = new Schema({
 
     name: {type:String,min:3, required:true,match:[/^[a-zA-Z0-9]+$/,'is invalid'],index:true},
+    phone:{type:Number, required:true, unique:true,},
     email:{type:String,required:true,unique:true,match:[/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,'is invalid'],index:true},
     password:{type:String,required:true,min:5,max:15},
     gender:{tpye:String,default:''},

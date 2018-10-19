@@ -5,7 +5,7 @@ var config  ={
             key:'',
             secret:''
         },
-        database:'mongodb://<user>:<pwd>'
+        database:'mongodb://mor:a123654789@ds137283.mlab.com:37283/adollar'
 
     },
     default:{

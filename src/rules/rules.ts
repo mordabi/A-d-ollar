@@ -5,6 +5,7 @@ import  Users  from '../models/users';
 const userRules = {
     forRegister: [
       check('email')
+      .exists().withMessage('email does not exist')
         .isEmail().withMessage('Invalid email format')
       .custom(email => {return Users.find({email:email}).then(u => { return  u.length ==0})}).withMessage('email already exist'),
        check('password')
