@@ -71,11 +71,13 @@ class UserRoutes
          var email = req.body.email;
          var password = req.body.password;
          var age = req.body.age;
+         var phone = req.body.phone;
         
         
         var user = new Users({
             
             name:name,
+            phone:phone,
             gender:gender,
             email:email,
             password:password,
