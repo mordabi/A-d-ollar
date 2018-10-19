@@ -45,7 +45,8 @@
     "express": "^4.14.0",
     "express-validator": "^5.3.0",
     "mongoose": "^5.3.2",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "helmet": "^3.14.0"
   },
   "directories": {
     "test": "test"
