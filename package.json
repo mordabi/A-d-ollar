@@ -4,7 +4,7 @@
   "description": "Check out the [blog post](http://mherman.org/blog/2016/11/05/developing-a-restful-api-with-node-and-typescript/#.WB3zyeErJE4).",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=production&&node dist/index.js",
+    "start": "NODE_ENV=production node dist/index.js",
     "ts-server" :"set NODE_ENV=default&&nodemon dist/index.js",
     "test": "mocha --reporter spec --compilers ts:ts-node/register 'test/**/*.test.ts'",
     "build-ts": "tsc",
